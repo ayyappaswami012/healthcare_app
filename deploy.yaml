@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-gateway
+  name: healthcare
 spec:
   selector:
     matchLabels:
-      app: api-gateway
+      app: healthcare
   replicas: 1
-  template: # template for the pods
+  template: 
     metadata:
       labels:
-        app: api-gateway
+        app: healthcare
     spec:
       containers:
-      - name: api-gateway
+      - name: healthcare
         image: ${REPOSITORY_TAG}
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: production-microservice
-        # Using this as a way to avoid having to bother pushing images to registry.
         imagePullPolicy: Never
         readinessProbe:
           httpGet:
@@ -28,14 +27,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fleetman-api-gateway
+  name: service-healthcare
 
 spec:
-  # This defines which pods are going to be represented by this Service
-  # The service becomes a network endpoint for either other services
-  # or maybe external users to connect to (eg browser)
   selector:
-    app: api-gateway
+    app: healthcare
 
   ports:
     - name: http
