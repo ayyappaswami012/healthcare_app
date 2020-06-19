@@ -2,7 +2,7 @@ FROM openjdk:8u131-jdk-alpine
 
 MAINTAINER Antriksh Devgan "antrikshdevgan@gmail.com"
 
-EXPOSE 8090
+EXPOSE 8080
 
 WORKDIR /usr/local/bin/
 
