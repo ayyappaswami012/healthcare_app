@@ -9,7 +9,7 @@ pipeline {
      REPOSITORY_TAG="${YOUR_DOCKERHUB_USERNAME}/${ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}"
    }
 
-   stages {
+  stages {
       stage('Preparation') {
          steps {
             cleanWs()
@@ -24,13 +24,23 @@ pipeline {
 
       stage('Build and Push Image') {
          steps {
-           sh 'docker image build -t ${REPOSITORY_TAG} .'
-         }
-      }
+          sh '''
+            docker image build -t ${REPOSITORY_TAG} .
+            
+            docker run -d -p 5000:5000 --name registry registry:2
+
+            docker image tag ${REPOSITORY_TAG} localhost:5000/${ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}
+            sleep 10
+            docker push localhost:5000/${ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}
+          '''
+        }
+           
+      } 
+    
 
       stage('Deploy to Cluster') {
           steps {
-                    sh 'envsubst < ${WORKSPACE}/deploy.yaml | kubectl apply -f -'
+                   sh 'docker container run -d -e "SPRING_PROFILES_ACTIVE=local-microservice" --name webapp -p 8010:80 antrikshdevgan/k8s-fleetman-webapp-angular:release0-5'
           }
       }
    }
