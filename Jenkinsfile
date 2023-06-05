@@ -3,8 +3,8 @@ pipeline {
 
    environment {
      // You must set the following environment variables
-     ORGANIZATION_NAME = "antrikshdev"
-     YOUR_DOCKERHUB_USERNAME = "antrikshdevgan"
+     ORGANIZATION_NAME = "ayyappa"
+     YOUR_DOCKERHUB_USERNAME = "ayyappaswami"
      SERVICE_NAME = "healthcare_app"
      REPOSITORY_TAG="${YOUR_DOCKERHUB_USERNAME}/${ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}"
    }
