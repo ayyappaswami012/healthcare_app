@@ -1,6 +1,6 @@
 FROM openjdk:8u131-jdk-alpine
 
-MAINTAINER Antriksh Devgan "antrikshdevgan@gmail.com"
+MAINTAINER Ayyappa swami "ayyappaswami012@gmail.com"
 
 EXPOSE 8080
 
